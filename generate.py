@@ -21,9 +21,11 @@ if __name__ == '__main__':
 
     model_dst, length, prefix, nn_type = (args.model_dst, args.length, args.prefix, args.nn_type)
 
+    print("loading model")
     if nn_type:
         my_model = neural_model.NeuralModel(storage_location=model_dst)
     else:
         my_model = model.NGramModel(model_dst)
 
+    print("generating text")
     print(my_model.generate(length, prefix))

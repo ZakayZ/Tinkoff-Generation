@@ -1,6 +1,8 @@
 import string
 import dill as pickle
 
+from tqdm import tqdm
+
 import numpy as np
 
 
@@ -48,7 +50,7 @@ class NGramModel:
                 context[-1] = generated_text[-1]
 
         word_count = 0
-        while word_count < length:
+        for i in tqdm(range(length)):
             new_word = np.random.choice(list(self.__vocabulary_word_to_hash.values()))
             for size in range(self.__gram_length):
                 context_tuple = tuple(context[size:])
@@ -59,8 +61,6 @@ class NGramModel:
                     break
 
             generated_text.append(new_word)
-            if self.__vocabulary_hash_to_word[new_word].isalpha():
-                word_count += 1
 
             context = np.roll(context, -1)
             context[-1] = generated_text[-1]
